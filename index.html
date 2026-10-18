@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#14532d"><meta name="description" content="Labour Mitra - mazdoor, thekedar aur kampiyon ko jodne wala app">
+<title>Labour Mitra - Advanced</title>
+<style>
+:root{--green:#14532d;--green2:#16a34a;--bg:#f3f7f4;--ink:#17231b;--muted:#647067;--line:#dce5de}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,"Noto Sans Devanagari",Arial,sans-serif;color:var(--ink)}
+header{background:var(--green);color:#fff;padding:18px 16px 20px;border-radius:0 0 20px 20px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand-container{display:flex;align-items:center;gap:10px}
+.app-logo{width:45px;height:45px;border-radius:50%;object-fit:cover;background:#fff;border:2px solid #fff}
+.brand{font-size:21px;font-weight:800;letter-spacing:.2px}.tag{font-size:12px;opacity:.9;margin-top:2px}
+button,select,input,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:700}
+.lang{background:#fff;color:var(--green);padding:8px 10px}.searchbox{margin-top:14px;background:#fff;border-radius:13px;padding:10px;display:flex;gap:8px}.searchbox input{border:0;outline:0;min-width:0;flex:1;padding:6px}
+.filters{margin-top:10px;display:flex;gap:8px}
+.filters select{flex:1;padding:8px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+main{max-width:760px;margin:auto;padding:15px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 16px}
+.tab{background:#e2ebe4;color:var(--green);font-size:12px;padding:8px 10px;text-align:center;flex:1;min-width:100px;border-radius:8px}
+.tab.active{background:var(--green);color:#fff}
+.section-title{font-size:18px;font-weight:800;margin:18px 0 10px}
+.card{background:white;border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 2px 6px #0b271008;position:relative;margin-bottom:10px}
+.card h3{margin:0 0 6px;font-size:16px}.muted{color:var(--muted);font-size:13px}
+.pill{display:inline-block;background:#eaf7ed;color:#166534;border-radius:20px;padding:4px 8px;font-size:12px;margin-top:8px}
+.primary{background:var(--green2);color:#fff}.secondary{background:#e5eee7;color:var(--green)}
+.whatsapp{background:#25d366;color:#fff;text-decoration:none;display:inline-block;padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700;margin-top:8px;margin-right:6px}
+.delete-btn{background:#fee2e2;color:#991b1b;padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700;margin-top:8px}
+.danger-btn{background:#dc2626;color:#fff;width:100%;margin-top:10px}
+.full{width:100%;margin-top:8px}
+.form{background:white;border:1px solid var(--line);padding:15px;border-radius:14px;margin-top:12px}
+.form label{display:block;font-size:13px;font-weight:700;margin:10px 0 5px}
+.form input,.form select,.form textarea{width:100%;padding:11px;border:1px solid #cbd7ce;border-radius:9px;background:#fff}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hidden{display:none!important}
+.photo{width:58px;height:58px;border-radius:12px;object-fit:cover;background:#e8eee9}
+.profiletop{display:flex;gap:12px;align-items:center}
+.empty{padding:24px;text-align:center;color:var(--muted);background:white;border-radius:12px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:420px){.brand{font-size:19px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top">
+  <div class="brand-container">
+   <img src="https://cdn-icons-png.flaticon.com/512/3065/3065415.png" alt="Logo" class="app-logo">
+   <div>
+    <div class="brand">Labour Mitra</div>
+    <div class="tag">मजदूर, कारीगर और ठेकेदार का सच्चा साथी</div>
+   </div>
+  </div>
+  <button class="lang" id="langBtn">English</button>
+ </div>
+ <div class="searchbox">
+  <input id="search" placeholder="नाम, कौशल या शहर खोजें...">
+  <button class="primary" id="searchBtn">खोजें</button>
+ </div>
+ <div class="filters">
+  <select id="cityFilter">
+   <option value="">सभी शहर / जिले</option>
+   <option value="भरतपुर">भरतपुर</option>
+   <option value="जयपुर">जयपुर</option>
+   <option value="मथुरा">मथुरा</option>
+   <option value="आगरा">आगरा</option>
+   <option value="दिल्ली">दिल्ली</option>
+   <option value="गुरुग्राम">गुरुग्राम</option>
+   <option value="अजमेर">अजमेर</option>
+   <option value="कोटा">कोटा</option>
+   <option value="उदयपुर">उदयपुर</option>
+  </select>
+ </div>
+</header>
+
+<main>
+ <!-- नेविगेशन टैब्स -->
+ <div class="tabs">
+  <button class="tab active" data-tab="workers">👷 सभी श्रमिक</button>
+  <button class="tab" data-tab="jobs">📢 काम के अवसर</button>
+  <button class="tab" data-tab="register">📝 फ्री रजिस्ट्रेशन</button>
+  <button class="tab" data-tab="post">➕ काम पोस्ट करें</button>
+  <button class="tab" data-tab="settings">⚙️ सेटिंग्स/एडमिन</button>
+ </div>
+
+ <!-- 1. सभी श्रमिक / कारीगर सूची सेक्शन -->
+ <section id="workers">
+  <div class="section-title">श्रमिक, कारीगर और ठेकेदार सूची</div>
+  <div style="margin-bottom:10px; display:flex; gap:6px; flex-wrap:wrap;">
+   <button class="secondary" onclick="filterCategory('all')">सभी</button>
+   <button class="secondary" onclick="filterCategory('मजदूर')">मजदूर</button>
+   <button class="secondary" onclick="filterCategory('राजमिस्त्री')">राजमिस्त्री</button>
+   <button class="secondary" onclick="filterCategory('इलेक्ट्रीशियन')">इलेक्ट्रीशियन</button>
+   <button class="secondary" onclick="filterCategory('प्लंबर')">प्लंबर</button>
+   <button class="secondary" onclick="filterCategory('ठेकेदार')">ठेकेदार</button>
+  </div>
+  <div id="workersList"></div>
+ </section>
+
+ <!-- 2. काम के अवसर सेक्शन -->
+ <section id="jobs" class="hidden">
+  <div class="section-title">उपलब्ध काम</div>
+  <div id="jobsList"></div>
+  <button class="secondary full" id="addDemoJob">+ नमूना काम जोड़ें</button>
+ </section>
+
+ <!-- 3. फ्री रजिस्ट्रेशन फॉर्म (मजदूर, राजमिस्त्री, इलेक्ट्रीशियन, प्लंबर, ठेकेदार) -->
+ <section id="register" class="hidden">
+  <div class="section-title">फ्री रजिस्ट्रेशन (100% Free)</div>
+  <form class="form" id="workerForm">
+   <label>पूरा नाम *</label><input name="name" required placeholder="अपना पूरा नाम लिखें">
+   <label>मोबाइल नंबर *</label><input name="phone" type="tel" pattern="[0-9]{10}" required placeholder="10 अंकों का मोबाइल नंबर">
+   <label>प्रोफाइल फोटो *</label><input name="photo" type="file" accept="image/*" capture="user" required>
+   
+   <label>कौशल / कार्य चुनें *</label>
+   <select name="skill" required>
+    <option value="">-- अपनी श्रेणी चुनें --</option>
+    <option value="मजदूर">सामान्य मजदूर (Labour)</option>
+    <option value="राजमिस्त्री">राजमिस्त्री (Mason)</option>
+    <option value="इलेक्ट्रीशियन">इलेक्ट्रीशियन (Electrician)</option>
+    <option value="प्लंबर">प्लंबर (Plumber)</option>
+    <option value="ठेकेदार">ठेकेदार (Contractor)</option>
+   </select>
+
+   <div class="row">
+    <div><label>राज्य *</label><input name="state" list="statesList" required placeholder="राज्य चुनें"></div>
+    <div><label>जिला / शहर *</label><input name="district" list="districtsList" required placeholder="जिला चुनें"></div>
+   </div>
+
+   <div class="row">
+    <div><label>कॉलोनी / मोहल्ला</label><input name="colony" placeholder="कॉलोनी या वार्ड"></div>
+    <div><label>गाँव</label><input name="village" placeholder="गाँव का नाम"></div>
+   </div>
+
+   <label>कार्य दक्षता रेटिंग (आप खुद को कितने स्टार देना चाहेंगे?)</label>
+   <select name="rating">
+    <option value="⭐⭐⭐⭐⭐ (5/5 उत्तम)">⭐⭐⭐⭐⭐ (5/5 उत्तम)</option>
+    <option value="⭐⭐⭐⭐ (4/5 बहुत अच्छा)">⭐⭐⭐⭐ (4/5 बहुत अच्छा)</option>
+    <option value="⭐⭐⭐ (3/5 अच्छा)">⭐⭐⭐ (3/5 अच्छा)</option>
+   </select>
+
+   <label>अनुभव (साल में)</label><input name="experience" placeholder="जैसे: 3 साल">
+   
+   <button class="primary full" type="submit">रजिस्टर करें</button>
+  </form>
+ </section>
+
+ <!-- 4. काम पोस्ट करें सेक्शन -->
+ <section id="post" class="hidden">
+  <div class="section-title">नया काम पोस्ट करें</div>
+  <form class="form" id="jobForm">
+   <label>कंपनी / ठेकेदार का नाम *</label><input name="employer" required>
+   <label>काम का प्रकार *</label><input name="work" required placeholder="जैसे: मकान निर्माण, वायरिंग फिटिंग">
+   <div class="row">
+    <div><label>जिला *</label><input name="city" list="districtsList" required placeholder="जिला चुनें"></div>
+    <div><label>राज्य *</label><input name="state" list="statesList" required value="राजस्थान"></div>
+   </div>
+   <div class="row">
+    <div><label>मजदूरी / वेतन (₹ प्रति दिन) *</label><input name="wage" type="number" min="0" required></div>
+    <div><label>कितने लोग चाहिए? *</label><input name="count" type="number" min="1" value="1" required></div>
+   </div>
+   <label>संपर्क मोबाइल नंबर *</label><input name="phone" type="tel" pattern="[0-9]{10}" required placeholder="10 अंकों का नंबर">
+   <label>काम का विवरण</label><textarea name="details" rows="3"></textarea>
+   <button class="primary full" type="submit">काम पोस्ट करें</button>
+  </form>
+ </section>
+
+ <!-- 5. सेटिंग्स और एडमिन कंट्रोल सेक्शन -->
+ <section id="settings" class="hidden">
+  <div class="section-title">ऐप सेटिंग्स और एडमिन कंट्रोल</div>
+  
+  <div class="form" id="adminLoginBox">
+   <h3>🔐 एडमिन लॉगिन (मालिक नियंत्रण)</h3>
+   <p class="muted">यदि आप ऐप के मालिक (Admin) हैं, तो पासवर्ड डालकर डेटा डिलीट करने का अधिकार प्राप्त करें।</p>
+   <label>एडमिन पासवर्ड डालें</label>
+   <input type="password" id="adminPass" placeholder="पासवर्ड दर्ज करें (डिफ़ॉल्ट: 1234)">
+   <button class="primary full" style="margin-top:10px;" id="loginAdminBtn">लॉगिन करें</button>
+  </div>
+
+  <div class="form hidden" id="adminPanel">
+   <h3 style="color:var(--green2);">✅ एडमिन मोड सक्रिय है</h3>
+   <p class="muted">अब आप किसी भी फर्जी या पुराने रजिस्ट्रेशन को तुरंत डिलीट कर सकते हैं।</p>
+   <button class="secondary full" id="logoutAdminBtn">लॉकआउट / लॉगआउट करें</button>
+   <button class="danger-btn" id="resetDataBtn">🗑 ऐप का सारा डेटा हमेशा के लिए साफ़ करें</button>
+  </div>
+
+  <div class="form" style="margin-top:15px;">
+   <h3>📱 ऐप विवरण</h3>
+   <p class="muted"><strong>Version:</strong> 3.0 (All-in-One)</p>
+   <p class="muted"><strong>Features:</strong> Free Registration, Category Filters, Rating System, Admin Delete Control.</p>
+  </div>
+ </section>
+</main>
+
+<!-- भारत के राज्य और जिले (Datalist) -->
+<datalist id="statesList">
+ <option value="राजस्थान"><option value="उत्तर प्रदेश"><option value="दिल्ली"><option value="हरियाणा"><option value="मध्य प्रदेश"><option value="बिहार"><option value="पंजाब"><option value="महाराष्ट्र"><option value="गुजरात">
+</datalist>
+
+<datalist id="districtsList">
+ <option value="भरतपुर"><option value="जयपुर"><option value="जोधपुर"><option value="उदयपुर"><option value="कोटा"><option value="अजमेर"><option value="मथुरा"><option value="आगरा"><option value="अलीगढ़"><option value="गुरुग्राम"><option value="दिल्ली"><option value="इन्दौर"><option value="भोपाल">
+</datalist>
+
+<footer>Labour Mitra • सर्वाधिकार सुरक्षित (Admin Controlled)</footer>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+let lang='hi', jobs=JSON.parse(localStorage.getItem('lm_jobs')||'[]'), workers=JSON.parse(localStorage.getItem('lm_workers')||'[]');
+let isAdmin = localStorage.getItem('lm_admin') === 'true';
+let currentCategory = 'all';
+
+function save(){localStorage.setItem('lm_jobs',JSON.stringify(jobs));localStorage.setItem('lm_workers',JSON.stringify(workers))}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+function checkAdminView(){
+ if(isAdmin){
+  $('#adminLoginBox').classList.add('hidden');
+  $('#adminPanel').classList.remove('hidden');
+ }else{
+  $('#adminLoginBox').classList.remove('hidden');
+  $('#adminPanel').classList.add('hidden');
+ }
+}
+
+function renderWorkers(){
+ let q=$('#search').value.trim().toLowerCase();
+ let selCity=$('#cityFilter').value;
+ let data=workers.filter(w=>{
+  let matchQ = !q || [w.name,w.skill,w.district,w.state,w.colony,w.village].join(' ').toLowerCase().includes(q);
+  let matchCity = !selCity || w.district.toLowerCase() === selCity.toLowerCase();
+  let matchCat = currentCategory === 'all' || w.skill === currentCategory;
+  return matchQ && matchCity && matchCat;
+ });
+
+ $('#workersList').innerHTML=data.length?data.map((w, index)=>{
+  let waText = encodeURIComponent(`👷 *${w.skill} Profile (Labour Mitra)*\n👤 Naam: ${w.name}\n🛠 Hunar: ${w.skill}\n⭐ Rating: ${w.rating||'N/A'}\n📍 Pata: ${w.colony||''}, ${w.village||''}, ${w.district}, ${w.state}\n⏳ Anubhav: ${w.experience||'उपलब्ध नहीं'}\n📞 Sampark: ${w.phone}`);
+  return `<div class="card listing">
+   <div class="profiletop">
+    ${w.photo?`<img class="photo" src="${w.photo}" alt="photo">`:'<div class="photo" style="display:grid;place-items:center;font-size:26px">👷</div>'}
+    <div>
+     <h3>${esc(w.name)}</h3>
+     <div class="muted">🛠 <strong>${esc(w.skill)}</strong> · 📍 ${esc(w.district)}, ${esc(w.state)}</div>
+     <div style="font-size:12px; margin-top:3px;">पता: ${esc(w.colony||'')} ${esc(w.village||'')}</div>
+     <span class="pill">${esc(w.rating||'⭐⭐⭐⭐⭐')}</span>
+    </div>
+   </div>
+   <p class="muted" style="margin-top:10px">📞 <a href="tel:${esc(w.phone)}">${esc(w.phone)}</a></p>
+   <div>
+    <a class="whatsapp" href="https://api.whatsapp.com/send?text=${waText}" target="_blank">💬 WhatsApp</a>
+    ${isAdmin?`<button class="delete-btn" onclick="deleteWorker(${index})">🗑 एडमिन डिलीट</button>`:''}
+   </div>
+  </div>`;
+ }).join(''):`<div class="empty">इस श्रेणी या शहर में कोई श्रमिक/कारीगर नहीं मिला।</div>`;
+}
+
+function filterCategory(cat){
+ currentCategory = cat;
+ renderWorkers();
+}
+
+function renderJobs(){
+ let q=$('#search').value.trim().toLowerCase();
+ let selCity=$('#cityFilter').value;
+ let data=jobs.filter(j=>{
+  let matchQ = !q || [j.work,j.city,j.state,j.employer,j.details].join(' ').toLowerCase().includes(q);
+  let matchCity = !selCity || j.city.toLowerCase() === selCity.toLowerCase();
+  return matchQ && matchCity;
+ });
+ 
+ $('#jobsList').innerHTML=data.length?data.map((j, index)=>{
+  let waText = encodeURIComponent(`📢 *Kaam ki Jankari (Labour Mitra)*\n🛠 Kaam: ${j.work}\n💰 Mazduri: ₹${j.wage} prati din\n📍 Sthan: ${j.city}, ${j.state}\n📞 Sampark: ${j.phone}\nVivaran: ${j.details||''}`);
+  return `<div class="card listing">
+   <h3>${esc(j.work)} — ₹${esc(j.wage)} प्रतिदिन</h3>
+   <div class="muted">📍 ${esc(j.city)}, ${esc(j.state)} · जरूरत: ${esc(j.count)} लोग</div>
+   <p>${esc(j.details||'')}</p>
+   <div class="muted">ठेकेदार/कंपनी: ${esc(j.employer)}</div>
+   <div class="muted">📞 <a href="tel:${esc(j.phone)}">${esc(j.phone)}</a></div>
+   <div>
+    <a class="whatsapp" href="https://api.whatsapp.com/send?text=${waText}" target="_blank">💬 WhatsApp</a>
+    ${isAdmin?`<button class="delete-btn" onclick="deleteJob(${index})">🗑 एडमिन डिलीट</button>`:''}
+   </div>
+  </div>`;
+ }).join(''):`<div class="empty">अभी कोई काम उपलब्ध नहीं है।</div>`;
+}
+
+function deleteJob(index){
+ if(confirm('क्या आप वाकई इस काम की पोस्ट को हटाना चाहते हैं?')){
+  jobs.splice(index, 1);
+  save();
+  renderJobs();
+ }
+}
+
+function deleteWorker(index){
+ if(confirm('क्या आप वाकई इस रजिस्ट्रेशन को हमेशा के लिए हटाना चाहते हैं?')){
+  workers.splice(index, 1);
+  save();
+  renderWorkers();
+ }
+}
+
+// एडमिन लॉगिन हैंडलर
+$('#loginAdminBtn').onclick=()=>{
+ let pass = $('#adminPass').value;
+ if(pass === '1234'){
+  isAdmin = true;
+  localStorage.setItem('lm_admin', 'true');
+  checkAdminView();
+  renderWorkers();
+  renderJobs();
+  alert('एडमिन लॉगिन सफल रहा!');
+ }else{
+  alert('गलत पासवर्ड! कृपया सही पासवर्ड (1234) डालें।');
+ }
+};
+
+$('#logoutAdminBtn').onclick=()=>{
+ isAdmin = false;
+ localStorage.setItem('lm_admin', 'false');
+ checkAdminView();
+ renderWorkers();
+ renderJobs();
+ alert('लॉगआउट हो गया है।');
+};
+
+$('#resetDataBtn').onclick=()=>{ if(confirm('चेतावनी: इससे सारा डेटा डिलीट हो जाएगा!')){ localStorage.clear(); jobs=[]; workers=[]; isAdmin=false; checkAdminView(); renderWorkers(); renderJobs(); alert('डेटा रीसेट कर दिया गया है।'); } };  function showTab(tab){ $$('main section').forEach(s=>s.classList.add('hidden'));
+ $('#'+tab).classList.remove('hidden'); $$('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab)) }  $$('.tab').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));$('#searchBtn').onclick=()=>{renderWorkers();renderJobs()};
+$('#search').addEventListener('input',()=>{renderWorkers();renderJobs()});
+$('#cityFilter').addEventListener('change',()=>{renderWorkers();renderJobs()});
+
+$('#workerForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ let form=e.target, o=Object.fromEntries(new FormData(form));
+ let file=form.elements.photo.files[0];
+ const done=photo=>{
+  o.photo=photo||''; workers.unshift(o); save(); form.reset(); renderWorkers();
+  alert('फ्री रजिस्ट्रेशन सफलतापूर्वक हो गया!');
+  showTab('workers');
+ };
+ if(file){let r=new FileReader();r.onload=()=>done(r.result);r.readAsDataURL(file)}else done('');
+});
+
+$('#jobForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ let o=Object.fromEntries(new FormData(e.target));
+ jobs.unshift(o); save(); e.target.reset(); renderJobs();
+ alert('काम सफलतापूर्वक पोस्ट हो गया!');
+ showTab('jobs');
+});
+
+$('#addDemoJob').onclick=()=>{
+ jobs.unshift({employer:'सुरेश ठेकेदार',work:'राजमिस्त्री (RCC छत)',city:'भरतपुर',state:'राजस्थान',wage:'800',count:'4',phone:'9876543210',details:'छत भराई का तत्काल कार्य है।'});
+ save(); renderJobs();
+};
+
+checkAdminView();
+renderWorkers();
+renderJobs();
+</script>
+</body>
+</html>
